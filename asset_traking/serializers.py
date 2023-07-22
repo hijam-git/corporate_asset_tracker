@@ -49,7 +49,7 @@ class CompanySerializer(serializers.ModelSerializer):
 class CompanyNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Company
-        fields = ('id','name')
+        fields = ('name',)
 
 #This serializer register a user with his corresponding company as staff
 class StaffSerializer(serializers.ModelSerializer):
