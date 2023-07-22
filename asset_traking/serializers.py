@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'email', 'first_name', 'last_name')
+        fields = ('id','username', 'password', 'email', 'first_name', 'last_name')
 
     def validate_email(self, value):
         # Checking if there is already a user with the same email
@@ -26,7 +26,7 @@ class CompanySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Company
-        fields = ('user', 'name', 'address')
+        fields = ( 'id','user', 'name', 'address')
 
     def create(self, validated_data):
         try:
@@ -58,7 +58,7 @@ class StaffSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Staff
-        fields = ('user', 'company', 'address')
+        fields = ('id','user', 'company', 'address')
 
     def create(self, validated_data):
         try:
@@ -77,7 +77,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Employee
-        exclude = ('id','company')
+        exclude = ('company',)
 
     def create(self, validated_data):
         user=self.context['request'].user #getting loged in user
@@ -94,7 +94,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 class AssetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Asset
-        exclude = ('id', 'company')
+        exclude = ('company',)
 
     def create(self, validated_data):
         user=self.context['request'].user #getting loged in user
@@ -120,7 +120,7 @@ class AssetLogSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = AssetLog
-        fields = ('asset', 'employee', 'checkout_quantity', 'checkout_time', 'checkout_condition', 'chekout_note', 'duration', 'is_returned', 'return_time', 'return_quantity', 'return_condition', 'returned_note')
+        fields = ('id','asset', 'employee', 'checkout_quantity', 'checkout_time', 'checkout_condition', 'chekout_note', 'duration', 'is_returned', 'return_time', 'return_quantity', 'return_condition', 'returned_note')
 
     def create(self, validated_data):
         try:

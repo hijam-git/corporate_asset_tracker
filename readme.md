@@ -1,4 +1,5 @@
 Introduction to Corporate Asset Tracker Application:
+
 This is a simple Corporate Asset Tracker Application that simplifies the asset management process, empowering companies to efficiently monitor and control their assets. Developed by Hijam Ibna Omar using Django Rest Framework.
 Key Features:
 1. Multi-Company Support: The application is designed to cater to multiple companies, enabling each company to have its own asset management system within the software.
@@ -12,7 +13,7 @@ Key Features:
 API Documentation for Corporate Asset Tracker Software:
 
 1. Register a User and Company as the Owner:
-   - URL: `/api/signup/`
+   - URL: `/api/signup-as-company-owner/`
    - Method: POST
    - Parameters:
       - `username` (string): Username of the owner (unique)
@@ -20,7 +21,7 @@ API Documentation for Corporate Asset Tracker Software:
       - `email` (string): Email address of the owner
       - `first_name` (string): First name of the owner
       - `last_name` (string): Last name of the owner
-      - `name` (string): Name of the company (unique)
+      - `name` (string): Name of the company 
       - `address` (string): Address of the company
    - Authentication: None (Open to anyone)
    - Response: Company details (ID, user, name, address)
@@ -34,7 +35,7 @@ API Documentation for Corporate Asset Tracker Software:
       - `email` (string): Email address of the staff
       - `first_name` (string): First name of the staff
       - `last_name` (string): Last name of the staff
-      - `company` (object): Company details (name)
+      - `company` (object): Company name of the employee
       - `address` (string): Address of the staff
    - Authentication: None (Open to anyone)
    - Response: Staff details (ID, user, company, address)
@@ -128,91 +129,116 @@ API Documentation for Corporate Asset Tracker Software:
     - Authentication: JWT Token required
     - Response: Asset Log details (ID, asset, employee, checkout_quantity, checkout_time, checkout_condition, checkout_note, duration, is_returned, return_time, return_quantity, return_condition, returned_note)
 
-Note: All API endpoints require JWT authentication except for the User and Staff registration endpoints, which are open to anyone for registration. The responses will contain relevant status codes (200 OK, 201 Created, 204 No Content, 400 Bad Request, 401 Unauthorized, 404 Not Found, etc.) based on the operation and data validation.
 
-JSON Object Examples for Request/Response:
+Some JSON Object Examples for Request/Response:
 
 1. Register a User and Company as the Owner (POST):
+```
 {
-   "username": "owner123",
-   "password": "password123",
-   "email": "owner@example.com",
-   "first_name": "Razib",
-   "last_name": "Hossain",
-   "name": "REPLIQ",
-   "address": " Main Street Mohammadpur "
+    "user": {
+        "username": "owner123",
+        "password": "pass123",
+        "email": "owner@example.com",
+        "first_name": "Razib",
+        "last_name": "Hossain"
+    },
+    "name": "REPLIQ",
+    "address": "Main Street Mohammadpur"
 }
 
 Response:
 {
-  "user": {
-    "username": "owner123",
-    "email": "owner@example.com",
-    "first_name": " Razib",
-    "last_name": " Hossain"
-  },
-  "name": " REPLIQ ",
-  "address": "Main Street Mohammadpur"
+    "id": 12,
+    "user": {
+        "username": "owner1234",
+        "email": "owner@example.com",
+        "first_name": "Razib",
+        "last_name": "Hossain"
+    },
+    "name": "REPLIQ",
+    "address": "Main Street Mohammadpur"
 }
-
+```
 
 2. Register a User as Staff with a Company (POST):
+```
 {
-   "username": "staff123",
-   "password": "password123",
-   "email": "staff@example.com",
-   "first_name": "MST",
-   "last_name": "Setu",
-   "company": {
-      "name": "Example Company"
-   },
-   "address": "Jalil Avenue"
+    "user": {
+        "username": "staff123",
+        "password": "staff123",
+        "email": "staff123@gmail.com",
+        "first_name": "staff",
+        "last_name": "123"
+    },
+    "company": {
+        "name": "REPLIQ"
+    },
+    "address": "Dhaka"
 }
 
 Response:
-{
-  "user": {
-    "username": "staff123",
-    "email": "staff@example.com",
-    "first_name": "MST",
-    "last_name": "Setu"
-  },
-  "company": {
-    "id": 1,
-    "name": "Example Company",
-    "address": "123 Main Street"
-  },
-  "address": "Jalil Avenue"
-}
 
+{
+    "id": 13,
+    "user": {
+        "id": 33,
+        "username": "staff123",
+        "email": "staff123@gmail.com",
+        "first_name": "staff",
+        "last_name": "123"
+    },
+    "company": {
+        "name": "REPLIQ"
+    },
+    "address": "Dhaka"
+}
+```
 3. Create an Employee for a Company (POST):
+```
 {
    "name": "Employee Name",
-   "address": "789 Downtown Street",
+   "address": "789 Street",
    "email": "employee@example.com",
    "phone": "123-456-7890"
 }
+```
 
 4. Create an Asset for a Company (POST):
+```
 {
    "name": "Laptop",
    "description": "Dell Inspiron 15"
 }
+```
 
 5. Log Asset Usage (POST):
+```
 {
-   "asset": {
-  
-      "name": "Laptop"
-   },
-   "employee": {
-      "name": "Employee Name"
-   },
-   "checkout_quantity": 1,
-   "checkout_time": "2023-07-20T12:00:00",
-   "checkout_condition": "good",
-   "checkout_note": "Asset checked out for a project",
-   "duration": "2023-08-20",
-   "is_returned": false
+    "asset": "Laptop",
+    "employee": "Employee Name",
+    "checkout_quantity": 1,
+    "checkout_time": "2023-07-20T12:00:00",
+    "checkout_condition": "good",
+    "chekout_note": "Asset checked out for a project",
+    "duration": "2023-08-20",
+    "is_returned": false
+
 }
 
+Response:
+{
+"id":8,
+"asset":"Laptop",
+"employee":"Employee Name",
+"checkout_quantity":1,
+"checkout_time":"2023-07-20T12:00:00Z",
+"checkout_condition":"good",
+"chekout_note":"Asset checked out for a project",
+"duration":"2023-08-20",
+"is_returned":false,
+"return_time":null,
+"return_quantity":0,
+"return_condition":null,
+"returned_note":null
+}
+```
